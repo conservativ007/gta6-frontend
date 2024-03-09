@@ -1,0 +1,58 @@
+.wrapper {
+  @apply w-screen min-h-screen relative;
+
+  form {
+    @apply w-max p-3 absolute left-5 top-5;
+    animation: slideIn 1s ease-in-out;
+
+    h1 {
+      @apply text-2xl mb-4;
+    }
+
+    input {
+      @apply block py-1.5 px-3 mb-3 w-full border border-transparent
+      bg-black/30 outline-none placeholder:text-white/60;  
+      transition: border-color .3s linear;
+    }
+
+    input:focus {
+      @apply border-[#ffb3c0];
+    }
+    
+    button {
+      @apply text-lg font-medium uppercase py-1 px-4 
+      border border-white inline-block mt-2 bg-transparent;
+      transition: box-shadow .4s linear, background-color .4s linear;
+    }
+
+    button:hover {
+      @apply bg-white/20;
+    }
+
+  }
+}
+
+.success {
+  @apply text-green-400 text-2xl font-medium;
+  animation: fade .4s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
