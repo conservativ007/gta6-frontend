@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styles from './Home.module.scss'
+import { useState } from 'react'
 
 interface IFormState {
 	name: string
@@ -7,12 +8,27 @@ interface IFormState {
 }
 
 function Home() {
-	const isSuccess = false
+	const { register, handleSubmit, reset } = useForm<IFormState>()
 
-	const { register, handleSubmit } = useForm<IFormState>()
+	const [isSuccess, setIsSucces] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const onSubmit: SubmitHandler<IFormState> = data => {
-		console.log(data)
+		setIsLoading(true)
+		fetch('http://localhost:5000/api', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data)
+				setIsSucces(true)
+				reset()
+			})
+			.finally(() => setIsLoading(false))
 	}
 
 	return (
@@ -33,7 +49,10 @@ function Home() {
 							placeholder='Enter name:'
 							{...register('name')}
 						/>
-						<button>Want GTA-6</button>
+						<button disabled={isLoading}>
+							{' '}
+							{isLoading ? 'Loading...' : 'Want GTA-6'}
+						</button>
 					</>
 				)}
 			</form>
